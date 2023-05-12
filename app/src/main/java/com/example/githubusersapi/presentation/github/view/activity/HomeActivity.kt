@@ -11,7 +11,6 @@ class HomeActivity : AppCompatActivity() {
     private val viewModel: GithubViewModel by viewModel()
 
     private lateinit var binding: ActivityHomeBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)

@@ -12,7 +12,10 @@ private const val ADMIN_USER = "YES"
 private const val NO_ADMIN_USER = "NO"
 private const val GREY_COLOR = "#e6e6e6"
 
-class GithubUsersAdapter(private val list: List<UserEntity>) :
+class GithubUsersAdapter(
+    private val list: List<UserEntity>,
+    private val listener: GithubUserOnClickListener
+) :
     RecyclerView.Adapter<GithubUsersAdapter.GithubUsersViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GithubUsersViewHolder {
@@ -37,6 +40,11 @@ class GithubUsersAdapter(private val list: List<UserEntity>) :
             txtUserAdmin.text = if (entity.isAdmin) ADMIN_USER else NO_ADMIN_USER
             imgUserAvatar.loadImageCircle(entity.avatarUrl)
             root.setBackgroundColor(backgroundColor)
+            root.setOnClickListener { listener.onClick(entity.user) }
         }
+    }
+
+    interface GithubUserOnClickListener {
+        fun onClick(login: String)
     }
 }

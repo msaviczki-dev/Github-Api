@@ -9,6 +9,14 @@
         android:id="@+id/githubUsersFragment"
         android:name="com.example.githubusersapi.presentation.github.view.fragment.GithubUsersFragment"
         android:label="GithubUsersFragment"
-        tools:layout="@layout/fragment_github_users" />
+        tools:layout="@layout/fragment_github_users">
+        <action
+            android:id="@+id/fromUsersToUserDetail"
+            app:destination="@id/githubUserDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/githubUserDetailFragment"
+        android:name="com.example.githubusersapi.presentation.github.view.fragment.GithubUserDetailFragment"
+        android:label="GithubUserDetailFragment" />
 
 </navigation>

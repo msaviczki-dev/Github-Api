@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.githubusersapi.R
 import com.example.githubusersapi.databinding.FragmentGithubUsersBinding
 import com.example.githubusersapi.helper.base.FragmentViewBinding
 import com.example.githubusersapi.presentation.github.viewmodel.GithubViewModel
@@ -14,13 +16,13 @@ import com.example.githubusersapi.data.result.Result
 import com.example.githubusersapi.domain.entities.UserEntity
 import com.example.githubusersapi.presentation.github.view.adapter.GithubUsersAdapter
 
-class GithubUsersFragment : FragmentViewBinding<FragmentGithubUsersBinding>() {
+class GithubUsersFragment : FragmentViewBinding<FragmentGithubUsersBinding>(),
+    GithubUsersAdapter.GithubUserOnClickListener {
 
     private val viewModel: GithubViewModel by sharedViewModel()
 
     override fun getViewBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
+        inflater: LayoutInflater, container: ViewGroup?
     ): FragmentGithubUsersBinding = FragmentGithubUsersBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,8 +61,13 @@ class GithubUsersFragment : FragmentViewBinding<FragmentGithubUsersBinding>() {
     private fun onSuccess(result: List<UserEntity>) = binding.apply {
         loadingUsers.isVisible = false
         recyclerUsers.isVisible = true
-        val adapter = GithubUsersAdapter(result)
+        val adapter = GithubUsersAdapter(result, this@GithubUsersFragment)
         recyclerUsers.adapter = adapter
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onClick(login: String) {
+        viewModel.login = login
+        findNavController().navigate(R.id.fromUsersToUserDetail)
     }
 }
